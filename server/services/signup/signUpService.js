@@ -36,6 +36,11 @@ class SignUpService {
             const templateVariables = { appUrl, otp };
             await Email.prepareAndSendEmail([req.body.email], subject, template, templateVariables);
             return { email: req.body.email, role: userType };
+        } else if (!user.isActive) {
+            throw {
+                message: MESSAGES.INACTIVE_USER,
+                statusCode: 400
+            };
         } else {
             return await SignUpService.checkLogin(req.body.password, user);
         }

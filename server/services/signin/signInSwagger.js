@@ -18,7 +18,7 @@ module.exports = (swaggerJson) => {
                     description: 'authentication parameter',
                     required: true,
                     schema: {
-                        $ref: '#/definitions/usersignIn'
+                        $ref: '#/definitions/userSignIn'
                     }
                 }
             ],
@@ -26,19 +26,19 @@ module.exports = (swaggerJson) => {
                 200: {
                     description: 'You have successfully logged in.',
                     schema: {
-                        $ref: '#/definitions/successRegister'
+                        $ref: '#/definitions/successLogin'
                     }
                 },
                 400: {
                     description: 'Bad Request',
                     schema: {
-                        $ref: '#/definitions/unauthorisedAccessEmail'
+                        $ref: '#/definitions/unauthorisedAccessLogin'
                     }
                 },
                 401: {
                     description: 'UnAuthorise',
                     schema: {
-                        $ref: '#/definitions/unauthorisedAccessEmail'
+                        $ref: '#/definitions/unauthorisedAccess'
                     }
                 },
                 500: {
@@ -51,7 +51,7 @@ module.exports = (swaggerJson) => {
         }
     };
 
-    swaggerJson.definitions.usersignIn = {
+    swaggerJson.definitions.userSignIn = {
         type: 'object',
         properties: {
             email: {
@@ -65,7 +65,7 @@ module.exports = (swaggerJson) => {
         }
     };
 
-    swaggerJson.definitions.successRegister = {
+    swaggerJson.definitions.successLogin = {
         properties: {
             status: {
                 type: 'number',
@@ -87,7 +87,7 @@ module.exports = (swaggerJson) => {
         }
     };
 
-    swaggerJson.definitions.unauthorisedAccessEmail = {
+    swaggerJson.definitions.unauthorisedAccessLogin = {
         properties: {
             status: {
                 type: 'number',

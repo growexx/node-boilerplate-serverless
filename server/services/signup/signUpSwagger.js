@@ -115,12 +115,6 @@ module.exports = (swaggerJson) => {
                         $ref: '#/definitions/errorBadRequest'
                     }
                 },
-                422: {
-                    description: 'User already register',
-                    schema: {
-                        $ref: '#/definitions/errorUserRegister'
-                    }
-                },
                 500: {
                     description: 'Internal Server Error',
                     schema: {
