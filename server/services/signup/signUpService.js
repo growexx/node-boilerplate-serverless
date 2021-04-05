@@ -58,7 +58,7 @@ class SignUpService {
             const token = await crypt.getUserToken(user);
             delete user.password;
             delete user.__v;
-            user = _.merge(user, token, otherDetails);
+            _.merge(user, token, otherDetails);
         }
 
         return user;

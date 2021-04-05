@@ -58,9 +58,24 @@ describe('Signup Account', () => {
                 });
         });
 
-        it('As a user I should validate if email is already registered and login', (done) => {
+        it('As a user I should validate if email is already registered but not verified', (done) => {
             const registerUser = {
                 email: 'john@mailinator.com',
+                password: '8776f108e247ab1e2b323042c049c266407c81fbad41bde1e8dfc1bb66fd267e'
+            };
+            request(process.env.BASE_URL)
+                .post('/auth/signup')
+                .send(registerUser)
+                .end((err, res) => {
+                    expect(res.body.status).to.be.status;
+                    assert.equal(res.statusCode, 400);
+                    done();
+                });
+        });
+
+        it('As a user I should validate if email is already registered and login', (done) => {
+            const registerUser = {
+                email: 'super@mailinator.com',
                 password: '8776f108e247ab1e2b323042c049c266407c81fbad41bde1e8dfc1bb66fd267e'
             };
             request(process.env.BASE_URL)

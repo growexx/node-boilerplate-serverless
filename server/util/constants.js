@@ -1,5 +1,6 @@
 module.exports = {
-    IV_LENGTH: 16, // For AES, this is always 16
+    // For AES, this is always 16
+    IV_LENGTH: 16,
     LOG_LEVEL: 'debug',
     PROFILE_PICTURE: {
         MIN_SIZE: 5120,
