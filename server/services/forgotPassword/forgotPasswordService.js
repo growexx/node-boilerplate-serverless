@@ -35,7 +35,7 @@ class ForgotPasswordService {
                 }
             });
 
-            const subject = 'Reset your password to access your CodeMonk account';
+            const subject = 'Reset your password to access your account';
             const template = 'emailTemplates/forgotPasswordMail.html';
             const templateVariables = { appUrl, actionURL };
             await Email.prepareAndSendEmail([req.body.email], subject, template, templateVariables);
