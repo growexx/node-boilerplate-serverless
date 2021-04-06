@@ -30,7 +30,7 @@ class SignUpService {
             const otp = UtilFunctions.generateOtp();
             const userType = req.body.userType;
             await SignUpService.saveOrUpdateRegistrationUser(req.body, hash, otp, userType);
-            const subject = 'Lets invent the future of work with CodeMonk';
+            const subject = 'Lets invent the future of work';
             const template = 'emailTemplates/verificationOtpMail.html';
             const appUrl = process.env.FRONTEND_URL;
             const templateVariables = { appUrl, otp };
@@ -139,7 +139,7 @@ class SignUpService {
         req.body.email = req.body.email.toLowerCase();
         const user = await User.findOne({ email: req.body.email }).exec();
         if (user) {
-            const subject = 'Lets invent the future of work with CodeMonk';
+            const subject = 'Lets invent the future of work';
             const template = 'emailTemplates/verificationOtpMail.html';
             const appUrl = process.env.FRONTEND_URL;
             const templateVariables = { appUrl, otp: user.otp };
