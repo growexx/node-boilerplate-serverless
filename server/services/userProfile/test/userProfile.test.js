@@ -159,3 +159,52 @@ describe('User Profile Picture', () => {
         CONSOLE_LOGGER.error(exception);
     }
 });
+
+describe('User Profile password change', () => {
+    try {
+        // Check all validation;
+        TestCase.changePassword.forEach((data) => {
+            it(data.it, (done) => {
+                request(process.env.BASE_URL)
+                    .put('/user/password')
+                    .set({ Authorization: requestPayloadUser.token })
+                    .attach('doc', data.options.doc)
+                    .end((err, res) => {
+                        expect(res.body.status).to.be.status;
+                        assert.equal(res.body.status, data.status);
+                        done();
+                    });
+            });
+        });
+
+        it('Check invalid existing password', async () => {
+            const data = {
+                oldPassword: '8776f108e247ab1e2b323042c049c266407c81fbad41bde1e8dfc1bb66fd267d',
+                newPassword: '8776f108e247ab1e2b323042c049c266407c81fbad41bde1e8dfc1bb66fd267e'
+            };
+            const res = await request(process.env.BASE_URL)
+                .put('/user/password')
+                .set({ Authorization: requestPayloadUser.token })
+                .send(data);
+            expect(res.body.status).to.be.status;
+            assert.equal(res.body.status, 0);
+            assert.equal(res.statusCode, 400);
+        });
+
+        it('Change user password', async () => {
+            const data = {
+                oldPassword: '8776f108e247ab1e2b323042c049c266407c81fbad41bde1e8dfc1bb66fd267e',
+                newPassword: '8776f108e247ab1e2b323042c049c266407c81fbad41bde1e8dfc1bb66fd267e'
+            };
+            const res = await request(process.env.BASE_URL)
+                .put('/user/password')
+                .set({ Authorization: requestPayloadUser.token })
+                .send(data);
+            expect(res.body.status).to.be.status;
+            assert.equal(res.body.status, 1);
+            assert.equal(res.statusCode, 200);
+        });
+    } catch (exception) {
+        CONSOLE_LOGGER.error(exception);
+    }
+});

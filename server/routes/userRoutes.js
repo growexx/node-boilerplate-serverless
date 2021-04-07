@@ -7,5 +7,6 @@ const userProfileController = require('../services/userProfile/userProfileContro
 router.get('/details', AuthMiddleWare, ACLMiddleWare, userProfileController.getUserDetails);
 router.put('/picture', AuthMiddleWare, ACLMiddleWare, UploadMiddleWare.single('photo'), userProfileController.updateProfilePicture);
 router.delete('/picture', AuthMiddleWare, ACLMiddleWare, userProfileController.deleteProfilePicture);
+router.put('/password', AuthMiddleWare, userProfileController.changePassword);
 
 module.exports = router;

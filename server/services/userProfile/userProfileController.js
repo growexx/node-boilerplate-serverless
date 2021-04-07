@@ -51,6 +51,23 @@ class UserProfileController {
         const data = await UserProfileService.deleteProfilePicture(res.locals.user);
         Utils.sendResponse(null, data, res, res.__('PHOTO_DELETE_SUCCESS'));
     }
+
+    /**
+     * @desc This function is being used to change user password
+     * @author Growexx
+     * @since 01/03/2021
+     * @param {Object} req Request
+     * @param {Object} req.body RequestBody
+     * @param {function} res Response
+     */
+    static async changePassword (req, res) {
+        try {
+            const data = await UserProfileService.changePassword(req.body, res.locals.user, res.__);
+            Utils.sendResponse(null, data, res, res.__('CHANGE_PASSWORD_SUCCESS'));
+        } catch (error) {
+            Utils.sendResponse(error, null, res, error.message);
+        }
+    }
 }
 
 module.exports = UserProfileController;

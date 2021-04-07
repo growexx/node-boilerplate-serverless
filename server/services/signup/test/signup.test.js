@@ -52,7 +52,7 @@ describe('Signup Account', () => {
                 .send(registerUser)
                 .end((err, res) => {
                     expect(res.body.status).to.be.status;
-                    assert.equal(res.body.data.role, CONSTANTS.ROLE.user);
+                    assert.equal(res.body.data.role, CONSTANTS.ROLE.USER);
                     assert.equal(res.statusCode, 200);
                     done();
                 });

@@ -2,6 +2,8 @@ const mongoose = require('mongoose');
 const User = require('../../models/user.model');
 const UserBasicProfileValidator = require('./userProfileValidator');
 const UploadService = require('../../util/uploadService');
+const crypt = require('../../util/crypt');
+const GeneralError = require('../../util/GeneralError');
 
 /**
  * Class represents services for user Basic Profile.
@@ -65,6 +67,29 @@ class UserProfileService {
                 profilePicture: ''
             }
         });
+    }
+
+    /**
+     * @desc This function is being used to change user password
+     * @author Growexx
+     * @since 01/03/2021
+     * @param {Object} req Request
+     * @param {Object} req.body RequestBody
+     * @param {Object} res Response
+     */
+    static async changePassword (data, user, locale) {
+        const Validator = new UserBasicProfileValidator(null, locale);
+        Validator.password(data.oldPassword);
+        Validator.password(data.newPassword);
+        const userPassword = await User.findOne({ _id: user._id }, { _id: 0, password: 1 }).lean();
+
+        const isMatch = await crypt.comparePassword(data.oldPassword, userPassword.password);
+        if (!isMatch) {
+            throw new GeneralError(locale('PASSWORD_NOT_MATCH'), 400);
+        } else {
+            const hash = await crypt.enCryptPassword(data.newPassword);
+            await User.updateOne({ _id: user._id }, { $set: { password: hash } });
+        }
     }
 }
 
