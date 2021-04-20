@@ -1,6 +1,10 @@
 ***Growexx Attendance
 # Node boilerplate
-This is a nodejs boilerplate with basic user authentication and uses AWS SES for sending emails.
+This is a nodejs boilerplate with basic user authentication and uses AWS SES for sending emails. This boilerplate has following features:
+- User signup along with sending verification otp
+- User signin
+- Forgot password
+- Update user profile
 
 ---
 ## Requirements
