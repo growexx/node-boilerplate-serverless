@@ -15,6 +15,7 @@ const methodOverride = require('method-override');
 const i18n = require('i18n');
 const morgan = require('morgan');
 const helmet = require('helmet');
+const Connection = require('./connection');
 
 // Global Variables
 global.DB_CONNECTION = require('mongoose');
@@ -24,31 +25,13 @@ global.MESSAGES = require('./locales/en.json');
 global.MOMENT = require('moment');
 global._ = require('lodash');
 
-const mongoHost = `${process.env.DB_HOST}/${process.env.DB_NAME}`;
-const mongoCredetials = process.env.DB_USERNAME ?
-    `${process.env.DB_USERNAME}:${encodeURIComponent(process.env.DB_PASSWORD)}@` : '';
-const dbUrl = `mongodb://${mongoCredetials}${mongoHost}`;
+const connectionToDb = () => {
+    Connection.checkConnection();
+};
 
-const options = {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-    bufferCommands: false,
-    bufferMaxEntries: 0,
-    useFindAndModify: false,
-    useCreateIndex: true,
-    poolSize: 10
-};
-const connectWithRetry = () => {
-    CONSOLE_LOGGER.info('MongoDB connection with retry');
-    DB_CONNECTION.connect(dbUrl, options).then(() => {
-        CONSOLE_LOGGER.info('MongoDB is connected');
-    }).catch((err) => {
-        CONSOLE_LOGGER.info(err);
-        CONSOLE_LOGGER.info('MongoDB connection unsuccessful, retry after 0.5 seconds.');
-        setTimeout(connectWithRetry, 500);
-    });
-};
-connectWithRetry();
+if (process.env.SERVERLESS === 'false') {
+    connectionToDb();
+}
 
 if (process.env.LOCAL === 'true') {
     app.use(express.static('../jsdocs/jsdocs'));
