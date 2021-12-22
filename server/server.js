@@ -29,9 +29,7 @@ const connectionToDb = () => {
     Connection.checkConnection();
 };
 
-if (process.env.SERVERLESS === 'false') {
-    connectionToDb();
-}
+connectionToDb();
 
 if (process.env.LOCAL === 'true') {
     app.use(express.static('../jsdocs/jsdocs'));
