@@ -6,7 +6,10 @@ const compression = require('compression');
 const express = require('express');
 const cookieParser = require('cookie-parser');
 const app = express();
-const swaggerRoutes = require('./services/swaggerRoutes');
+const swaggerUi = require('swagger-ui-express');
+const swaggerDoc = require('swagger-jsdoc');
+const swaggerDef = require('./public/swagger.json');
+const fileSearch = require('./util/fileSearch');
 const authRoutes = require('./routes/authRoutes');
 const userRoutes = require('./routes/userRoutes');
 const bodyParser = require('body-parser');
@@ -69,8 +72,11 @@ app.use(cors({
 
 app.use(morgan('dev'));
 app.use(methodOverride());
+
+swaggerDef.apis = fileSearch.getSwaggerFiles(`${__dirname}/services/`);
+const spec = swaggerDoc(swaggerDef);
 if (process.env.NODE_ENV !== 'production') {
-    app.use('/', swaggerRoutes);
+    app.use('/api-docs/', swaggerUi.serve, swaggerUi.setup(spec));
 }
 // Landing Page
 app.get('/', (req, res) => {
