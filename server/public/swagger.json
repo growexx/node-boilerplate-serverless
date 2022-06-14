@@ -13,6 +13,5 @@
         }
       ] 
     },
-    "definitions" :{},
-    "apisSorter" : "alpha"        
+    "apis": ["./server/services/*.swagger.js", "./server/services/**/*.swagger.js"]    
   }
